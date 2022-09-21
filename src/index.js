@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const users = [];
+let users = [];
 
 function checksExistsUserAccount(request, response, next) {
   // Complete aqui
@@ -16,13 +16,26 @@ function checksExistsUserAccount(request, response, next) {
 function checksCreateTodosUserAvailability(request, response, next) {
   const { user } = request;
 
-  const todosLengthByUser = users.find(userByList => userByList.id === user.id).todos.length;
+  if (user.pro) return next();
 
-  user.pro && todosLengthByUser < 10 ? next() : null;
+  const findUserByIdInUsersList = users.find(userByList => userByList.id === user.id);
+ 
+  if (findUserByIdInUsersList) 
+  {
+    user.pro && findUserByIdInUsersList.todos.length <= 10 ? next() : null
+  }
 }
 
 function checksTodoExists(request, response, next) {
-  // Complete aqui
+  const { username } = request.headers;
+  const { id } = request.params;
+  
+  const findUserByUsername = users.find(user => user.username === username)
+  const validateUuid = validate(id);
+  
+  const verifyIdExisitsInTodo = users.find(user => user.id === id);
+
+  if (findUserByUsername && validateUuid && verifyIdExisitsInTodo) return next();
 }
 
 function findUserById(request, response, next) {
