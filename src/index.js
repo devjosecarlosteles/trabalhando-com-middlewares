@@ -7,23 +7,28 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-let users = [];
+const users = [];
 
 function checksExistsUserAccount(request, response, next) {
-  // Complete aqui
+  const { username } = request.headers;
+
+  const verifyUserAccountExists = users.find(user => user.username === username);
+
+  if (verifyUserAccountExists) {
+    request.user = verifyUserAccountExists;
+
+    return next();
+  }
 }
 
-function checksCreateTodosUserAvailability(request, response, next) {
+function checksCreateTodosUserAvailability (request, response, next) {
   const { user } = request;
 
-  if (user.pro) return next();
-
-  const findUserByIdInUsersList = users.find(userByList => userByList.id === user.id);
- 
-  if (findUserByIdInUsersList) 
-  {
-    user.pro && findUserByIdInUsersList.todos.length <= 10 ? next() : null
+  if (user.pro) {
+    return next();
   }
+
+  user.todos < 10 ? next() : null;
 }
 
 function checksTodoExists(request, response, next) {
