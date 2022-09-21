@@ -19,6 +19,8 @@ function checksExistsUserAccount(request, response, next) {
 
     return next();
   }
+
+  return response.status(404).json({ err: "user not found" })
 }
 
 function checksCreateTodosUserAvailability (request, response, next) {
@@ -28,7 +30,7 @@ function checksCreateTodosUserAvailability (request, response, next) {
     return next();
   }
 
-  user.todos < 10 ? next() : null;
+  user.todos < 10 ? next() : response.status(403).json({ err: "user is not have pro plan" });
 }
 
 function checksTodoExists(request, response, next) {
