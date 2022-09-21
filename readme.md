@@ -10,4 +10,6 @@
  - [x] Should not be able to put user and todo in request when todo id is not uuid
  - [x] Should not be able to put user and todo in request when todo does not exists
  - [x] Should be able to find user by id route param and pass it to request.user
- - [] Should not be able to pass user to request.user when it does not exists
+ - [x] Should not be able to pass user to request.user when it does not exists
+
+ Restaram alguns problemas mas relacionas aos testes não listados, aparentemente estavam dando timeout, mas por no notion informar que não era necessário modificar as rotas mantive esses testes!
