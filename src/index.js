@@ -39,12 +39,16 @@ function checksTodoExists(request, response, next) {
   
   const findUserByUsername = users.find(user => user.username === username);
   const validateUuid = validate(id);
-  
-  const verifyIdExisitsInTodo = users.find(user => user.id === id);
 
+  const verifyTodoExists = users.find(user => user.todos.find(todo => todo.id === id));
+  
   if(!findUserByUsername) return response.status(404);
   if (!validateUuid) return response.status(400);
-  if(!verifyIdExisitsInTodo) return response.status(404);
+  if(!verifyTodoExists) return response.status(404);
+
+
+  request.user = findUserByUsername;
+  request.todo = verifyTodoExists.todos[0];
 
   return next();
 }
@@ -56,9 +60,11 @@ function findUserById(request, response, next) {
 
   if (findUserById) {
     request.user = findUserById;
-    
+
     return next();
   }
+
+  return response.status(404);
 }
 
 app.post('/users', (request, response) => {
