@@ -14,7 +14,11 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  const todosLengthByUser = users.find(userByList => userByList.id === user.id).todos.length;
+
+  user.pro && todosLengthByUser < 10 ? next() : null;
 }
 
 function checksTodoExists(request, response, next) {
