@@ -37,16 +37,16 @@ function checksTodoExists(request, response, next) {
   const { username } = request.headers;
   const { id } = request.params;
   
-  const findUserByUsername = users.find(user => user.username === username)
+  const findUserByUsername = users.find(user => user.username === username);
   const validateUuid = validate(id);
   
   const verifyIdExisitsInTodo = users.find(user => user.id === id);
 
-  if (!validateUuid) return response(400);
+  if(!findUserByUsername) return response.status(404);
+  if (!validateUuid) return response.status(400);
+  if(!verifyIdExisitsInTodo) return response.status(404);
 
-  if (findUserByUsername && validateUuid && verifyIdExisitsInTodo) return next();
-  
-  return response.status(404);
+  return next();
 }
 
 function findUserById(request, response, next) {
