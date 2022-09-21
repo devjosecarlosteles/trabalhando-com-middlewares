@@ -6,9 +6,6 @@
  
  - [x] checksTodoExists › should be able to put user and todo in request when both exits
  - [x] Should be able to let user create infinite new todos when is in Pro plan
-
- - [ ] checksTodoExists › should not be able to put user and todo in request when user does not exists
-
- - [ ]  checksTodoExists › should not be able to put user and todo in request when todo id is not uuid
-
- - [ ]  
+ - [x] Should be able to put user and todo in request when both exits
+ - [x] Should not be able to put user and todo in request when user does not exists
+ - [x] Should not be able to put user and todo in request when todo id is not uuid

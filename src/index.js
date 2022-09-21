@@ -42,7 +42,11 @@ function checksTodoExists(request, response, next) {
   
   const verifyIdExisitsInTodo = users.find(user => user.id === id);
 
+  if (!validateUuid) return response(400);
+
   if (findUserByUsername && validateUuid && verifyIdExisitsInTodo) return next();
+  
+  return response.status(404);
 }
 
 function findUserById(request, response, next) {
